@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -8,42 +8,48 @@ import {
   NavbarItem,
   Link,
   Button,
-} from "@nextui-org/react";
-import { usePathname } from "next/navigation";
-import { ArrowRightOutlined } from "@ant-design/icons";
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+} from '@nextui-org/react';
+import { usePathname } from 'next/navigation';
+import { ArrowRightOutlined } from '@ant-design/icons';
 interface Route {
   href: string;
   title: string;
 }
 
-const routes: Route[] = [
-  {
-    href: "/",
-    title: "Home",
-  },
-
-  {
-    href: "#",
-    title: "Menu",
-  },
-
-  {
-    href: "#",
-    title: "Service",
-  },
-  {
-    href: "#",
-    title: "Contact",
-  },
-];
-
 export default function Navigation() {
+  const routes: Route[] = [
+    {
+      href: '/',
+      title: 'Home',
+    },
+
+    {
+      href: '/Menu',
+      title: 'Menu',
+    },
+
+    {
+      href: '/Service',
+      title: 'Service',
+    },
+    {
+      href: '/Contact',
+      title: 'Contact',
+    },
+  ];
+
   const pathname = usePathname();
-  console.log(`${pathname} - ${routes[0].href}`, pathname === routes[0].href);
+
   return (
-    <Navbar>
+    <Navbar disableAnimation isBordered>
+      <NavbarContent className='sm:hidden' justify='start'>
+        <NavbarMenuToggle className='text-primary' />
+      </NavbarContent>
       <NavbarBrand>
-        <p className='font-bold text-4xl'>
+        <p className='font-bold text-4xl text-black'>
           F<span className='text-primary'>OO</span>D
         </p>
       </NavbarBrand>
@@ -54,7 +60,7 @@ export default function Navigation() {
               href={href}
               aria-current='page'
               className={
-                href === pathname ? "text-primary font-bold" : "text-secondary"
+                href === pathname ? 'text-primary font-bold' : 'text-black'
               }
             >
               {title}
@@ -67,15 +73,30 @@ export default function Navigation() {
           <Button
             as={Link}
             color='primary'
-            className='px-8 rounded-full'
-            href='#'
+            className='px-8 rounded-full transition-all'
+            href='/SignIn'
             variant='shadow'
           >
-            Sign Up
+            Sign In
             <ArrowRightOutlined />
           </Button>
         </NavbarItem>
       </NavbarContent>
+
+      <NavbarMenu>
+        {routes.map((item, index) => (
+          <NavbarMenuItem key={`${item.title}-${index}`}>
+            <Link
+              className='w-full'
+              color={pathname === item.href ? 'primary' : 'foreground'}
+              href={item.href}
+              size='lg'
+            >
+              {item.title}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }
