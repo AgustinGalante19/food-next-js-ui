@@ -23,7 +23,7 @@ const config: Config = {
           layout: {},
           colors: {
             primary: '#ea3f30',
-            secondary: '#fff',
+            secondary: '#fef5f5',
             success: '#26e134',
             warning: '#e2a83b',
             danger: '#ba2417',

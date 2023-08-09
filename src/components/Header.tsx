@@ -38,7 +38,7 @@ function Header() {
             </Button>
           </div>
         </div>
-        <div className="w-full h-full bg-cover bg-[url('/header.png')] max-sm:hidden"></div>
+        <div className="w-full h-full bg-cover bg-[url('/header.png')] max-[380px]:bg-center"></div>
       </div>
     </header>
   );
