@@ -45,10 +45,3 @@ function Header() {
 }
 
 export default Header;
-/* <Button
-            as={Link}
-            color='primary'
-            className='px-8 rounded-full transition-all'
-            href='/SignIn'
-            variant='shadow'
-          > */
