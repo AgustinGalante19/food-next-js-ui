@@ -1,8 +1,12 @@
+'use client';
+
 import { Providers } from '@/context/Providers';
 import './globals.css';
 import type { Metadata } from 'next';
 import { /* Inter */ Open_Sans } from 'next/font/google';
 import Navigation from '@/components/Navigation';
+import Script from 'next/script';
+import Footer from '@/components/Footer';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
 
@@ -24,10 +28,14 @@ export default function RootLayout({
             <div className='flex flex-col min-h-screen w-full bg-white'>
               <Navigation />
               <div className='flex-1'>{children}</div>
-              <footer className='bg-blue-400'>holaa</footer>
+              <Footer />
             </div>
           </div>
         </Providers>
+        <Script
+          type='text/javascript'
+          src='../../node_modules/tw-elements/dist/js/tw-elements.umd.min.js'
+        ></Script>
       </body>
     </html>
   );

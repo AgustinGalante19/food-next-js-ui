@@ -7,7 +7,7 @@ import React from 'react';
 function Header() {
   return (
     <header className='container mx-auto mt-14 py-2'>
-      <div className=' grid grid-rows-1 grid-cols-2 max-w-5xl mx-auto p-5 max-md:grid-rows-2 max-md:grid-cols-1'>
+      <div className=' grid grid-rows-1 grid-cols-2 container mx-auto p-5 max-md:grid-rows-2 max-md:grid-cols-1'>
         <div className='w-full flex flex-col gap-4'>
           <h1 className='text-5xl max-md:max-w-full font-bold text-black max-w-sm leading-snug'>
             Be The Fastest In Delivering Your{' '}
@@ -38,7 +38,7 @@ function Header() {
             </Button>
           </div>
         </div>
-        <div className="w-full h-full bg-cover bg-[url('/header.png')] max-[380px]:bg-center"></div>
+        <div className="w-full h-full bg-no-repeat bg-cover bg-[url('/header.png')] max-[380px]:bg-center"></div>
       </div>
     </header>
   );

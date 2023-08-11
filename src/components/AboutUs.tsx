@@ -50,7 +50,7 @@ const CardList = ({ cards }: { cards: Card[] }) => {
 
 function AboutUs() {
   return (
-    <main className='flex max-w-5xl mx-auto px-5 py-12 bg-secondary'>
+    <main className='flex container mx-auto px-5 py-12 bg-secondary'>
       <div className='flex flex-col mx-auto'>
         <div className='flex'>
           <h6 className='text-primary text-sm text-center mx-auto'>

@@ -223,7 +223,7 @@ const products: Product[] = [
 
 const Product = ({ product }: { product: Product }) => {
   return (
-    <Card className='py-4 w-[220px] flex'>
+    <Card className='py-4 w-[220px] flex max-md:mx-auto'>
       <CardBody className='py-2 justify-center'>
         <Image
           alt='Card background'
@@ -250,7 +250,7 @@ const Product = ({ product }: { product: Product }) => {
 
 function Menu() {
   return (
-    <section className='max-w-5xl mx-auto px-5 py-12'>
+    <section className='container mx-auto px-5 py-12'>
       <div className='flex flex-col'>
         <div className='flex'>
           <h6 className='text-primary text-sm text-center mx-auto'>Our Menu</h6>
@@ -260,13 +260,13 @@ function Menu() {
             Menu That Always Make You Fall In Love
           </h2>
         </div>
-        <div className='flex justify-center gap-4 p-2 mt-2'>
+        <div className='flex justify-center gap-4 p-2 mt-2 overflow-auto'>
           {categories.map((cat) => (
             <Category key={cat.id} icon={cat.icon} label={cat.label} />
           ))}
         </div>
         <div className='p-8 flex-col'>
-          <div className='flex justify-center gap-4'>
+          <div className='flex justify-center gap-4 max-md:flex-col max-md:justify-center py-3'>
             {products.map((product) => (
               <Product product={product} key={product.id} />
             ))}
@@ -277,8 +277,7 @@ function Menu() {
             as={Link}
             href='/Menu'
             color='primary'
-            className='text-primary rounded-full'
-            variant='ghost'
+            className='text-primary rounded-full bg-white shadow-lg px-4 font-bold hover:bg-primary hover:text-white'
           >
             Show More
           </Button>
