@@ -82,8 +82,8 @@ function LoginForm() {
 function SignIn() {
   return (
     <div className='container max-w-5xl mx-auto py-8'>
-      <div className='flex p-4 max-md:flex-col'>
-        <div className='flex flex-col max-md:hidden'>
+      <div className='flex p-4 max-md:flex-col max-md:p-1'>
+        <div className='flex flex-col max-md:hidden max-lg:m-auto'>
           <Image
             src='/formbg.jpg'
             width='600px'
@@ -92,7 +92,7 @@ function SignIn() {
             isZoomed
           />
         </div>
-        <div className='flex flex-col flex-1 justify-center align-middle px-12'>
+        <div className='flex flex-col flex-1 justify-center align-middle px-12 max-md:px-1'>
           <LoginForm />
         </div>
       </div>
