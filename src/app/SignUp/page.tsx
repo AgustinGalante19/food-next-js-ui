@@ -10,19 +10,19 @@ import {
 } from '@ant-design/icons'
 import { Button, Checkbox, Image, Input, Link } from '@nextui-org/react'
 import React, { useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
+/* import 'react-toastify/dist/ReactToastify.css' */
 
 function SignUpForm() {
   const [isVisible, setIsVisible] = useState(false)
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
-  const { handleSubmitSignIn, isLoading } = useAuth()
+  const { handleSubmitSignup, isLoading } = useAuth()
   return (
     <form
       className="flex flex-col w-[400px] mx-auto gap-4 max-sm:w-[300px]"
-      onSubmit={handleSubmitSignIn}
+      onSubmit={handleSubmitSignup}
     >
       <h2 className="font-bold text-4xl mb-4">SignUp</h2>
       <div className="flex flex-col">

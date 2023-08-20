@@ -14,9 +14,10 @@ import {
   User,
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
-import { ArrowRightOutlined } from '@ant-design/icons'
+import { ArrowRightOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useAuthCtx } from '@/context/AuthContext'
 import jwt_decode from 'jwt-decode'
+import useAuth from '@/hooks/auth/useAuth'
 
 interface Route {
   href: string
@@ -48,11 +49,14 @@ export default function Navigation() {
   const pathname = usePathname()
 
   const { isAuth } = useAuthCtx()
+  const { handleSignout } = useAuth()
+
   let decoded: any
   const token = localStorage.getItem('user-token') ?? ''
   if (token !== '') {
     decoded = jwt_decode(token)
   }
+
   return (
     <Navbar disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">
@@ -81,14 +85,24 @@ export default function Navigation() {
       <NavbarContent justify="end">
         <NavbarItem>
           {isAuth ? (
-            <User
-              className="font-bold cursor-pointer "
-              name={`${decoded.body.name} ${decoded.body.surname}`}
-              description={<span>{decoded.body.email}</span>}
-              avatarProps={{
-                src: 'https://avatars.githubusercontent.com/u/30373425?v=4',
-              }}
-            />
+            <div className="flex gap-4">
+              <User
+                className="font-bold cursor-pointer "
+                name={`${decoded.name} ${decoded.surname}`}
+                description={<span>{decoded.email}</span>}
+                avatarProps={{
+                  src: 'https://avatars.githubusercontent.com/u/30373425?v=4',
+                }}
+              />
+              <Button
+                isIconOnly
+                onClick={handleSignout}
+                className="bg-transparent hover:text-red-400 text-lg"
+                size="lg"
+              >
+                <LogoutOutlined />
+              </Button>
+            </div>
           ) : (
             <Button
               as={Link}

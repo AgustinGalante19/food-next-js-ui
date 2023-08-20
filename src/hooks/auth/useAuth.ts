@@ -12,7 +12,7 @@ export default function useAuth() {
   const { setIsAuth } = useAuthCtx()
   const router = useRouter()
 
-  const handleSubmitSignIn = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmitSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fields = new FormData(e.currentTarget)
     const name = fields.get('name')
@@ -33,7 +33,7 @@ export default function useAuth() {
         phone,
       }
       api
-        .post('/token', body)
+        .post('/auth/signup', body)
         .then((response) => {
           const token = response.headers['user-token']
           setIsAuth(true)
@@ -71,5 +71,67 @@ export default function useAuth() {
     }
   }
 
-  return { handleSubmitSignIn, isLoading }
+  const handleSignin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const fields = new FormData(e.currentTarget)
+    const email = fields.get('email')
+    const password = fields.get('password')
+    setIsLoading(true)
+    api
+      .post('/auth/signin', { email, password })
+      .then((response) => {
+        const token = response.headers['user-token']
+        setIsAuth(true)
+        localStorage.setItem('user-token', token)
+        router.push('/')
+      })
+      .catch((err) => {
+        const error = err as AxiosError<ApiErrorResponse>
+        const errorData = error.response?.data.errors
+        console.log(errorData)
+        if (errorData?.data.includes('Email')) {
+          return toast.error('Email not found', {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+        }
+        if (errorData?.data.includes('password')) {
+          return toast.error('Wrong password!', {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+        }
+        return toast.error('Unexpected Error', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+      })
+      .finally(() => setIsLoading(false))
+  }
+
+  const handleSignout = () => {
+    localStorage.removeItem('user-token')
+    setIsAuth(false)
+    /* window.location.reload() */
+  }
+
+  return { handleSubmitSignup, isLoading, handleSignout, handleSignin }
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { Providers } from '@/context/Providers'
+import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
@@ -24,7 +25,7 @@ export default function RootLayout({
 }) {
   const pathname = usePathname()
   const { push } = useRouter()
-  const token = localStorage.getItem('user-token') ?? ''
+  const token = window.localStorage.getItem('user-token') ?? ''
 
   useEffect(() => {
     if (token !== '') {

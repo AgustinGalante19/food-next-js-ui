@@ -1,14 +1,14 @@
 'use client'
 
+import React from 'react'
 import { BookOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Button } from '@nextui-org/react'
-import React from 'react'
 
 function Header() {
   return (
     <header className="container mx-auto mt-14 py-2">
       <div className=" grid grid-rows-1 grid-cols-2 container mx-auto p-5 max-md:grid-rows-2 max-md:grid-cols-1">
-        <div className="w-full flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4 m-auto items-center">
           <h1 className="text-5xl max-md:max-w-full font-bold text-black max-w-sm leading-snug">
             Be The Fastest In Delivering Your{' '}
             <span className="text-primary">Food</span>
@@ -38,7 +38,7 @@ function Header() {
             </Button>
           </div>
         </div>
-        <div className="bg-no-repeat bg-contain bg-[url('/header.png')] max-[380px]:bg-center max-lg:bg-cover"></div>
+        <div className="bg-no-repeat bg-contain bg-center bg-[url('/header.png')] h-[700px] max-[380px]:bg-center max-lg:h-auto max-lg:bg-cover"></div>
       </div>
     </header>
   )

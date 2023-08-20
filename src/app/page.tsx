@@ -1,6 +1,6 @@
 import AboutUs from '@/components/AboutUs';
 import Header from '@/components/Header';
-import Menu from '@/components/Menu';
+import Menu from '@/components/Menu/Menu';
 import Reviews from '@/components/Reviews';
 
 export default function Home() {
