@@ -3,10 +3,9 @@
 import React from 'react'
 import { Button } from '@nextui-org/react'
 import Link from 'next/link'
-import Category from './components/Category'
 import Product from './components/Product'
-import categories from './utils/categories'
 import products from './utils/products'
+import CategoryList from './CategoryList'
 
 function Menu() {
   return (
@@ -20,16 +19,7 @@ function Menu() {
             Menu That Always Make You Fall In Love
           </h2>
         </div>
-        <div className="flex justify-center gap-4 p-2 mt-2 overflow-auto">
-          {categories.map((cat) => (
-            <Category
-              key={cat.id}
-              icon={cat.icon}
-              label={cat.label}
-              selected={cat.selected}
-            />
-          ))}
-        </div>
+        <CategoryList />
         <div className="p-8 flex-col">
           <div className="flex justify-center gap-4 max-md:flex-col max-md:justify-center py-3">
             {products.map((product) => (

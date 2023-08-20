@@ -25,9 +25,9 @@ export default function RootLayout({
 }) {
   const pathname = usePathname()
   const { push } = useRouter()
-  const token = window.localStorage.getItem('user-token') ?? ''
 
   useEffect(() => {
+    const token = window.localStorage.getItem('user-token') ?? ''
     if (token !== '') {
       if (pathname === '/SignIn' || pathname === '/SignUp') {
         return push('/')

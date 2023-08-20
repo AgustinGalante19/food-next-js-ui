@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Navbar,
   NavbarBrand,
@@ -51,12 +51,13 @@ export default function Navigation() {
   const { isAuth } = useAuthCtx()
   const { handleSignout } = useAuth()
 
-  let decoded: any
-  const token = localStorage.getItem('user-token') ?? ''
-  if (token !== '') {
-    decoded = jwt_decode(token)
-  }
-
+  const [decoded, setDecoded] = useState<any>('')
+  useEffect(() => {
+    const token = localStorage.getItem('user-token') ?? ''
+    if (token !== '') {
+      setDecoded(jwt_decode(token))
+    }
+  }, [])
   return (
     <Navbar disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">
@@ -84,7 +85,7 @@ export default function Navigation() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {isAuth ? (
+          {isAuth && decoded !== '' ? (
             <div className="flex gap-4">
               <User
                 className="font-bold cursor-pointer "

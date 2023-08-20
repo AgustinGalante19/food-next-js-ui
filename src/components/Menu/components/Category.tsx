@@ -1,20 +1,15 @@
 import React from 'react'
 import { Button } from '@nextui-org/react'
+import { BurguerIcon } from './Icons'
 
 interface CatProps {
   label: string
-  icon: React.JSX.Element
-  selected: boolean
+  icon?: React.JSX.Element
 }
 
-const Category = ({ icon, label, selected }: CatProps) => {
+const Category = ({ /* icon, */ label }: CatProps) => {
   return (
-    <Button
-      startContent={icon}
-      className={`w-32 ${
-        selected ? 'bg-primary text-white' : 'bg-white'
-      }  shadow-md`}
-    >
+    <Button startContent={<BurguerIcon />} className="w-32" variant="ghost">
       {label}
     </Button>
   )
