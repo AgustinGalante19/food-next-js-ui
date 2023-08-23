@@ -1,5 +1,7 @@
+'use client'
+
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
-import Product from '../types/Product'
+import Product from '../../../types/Product'
 
 const Product = ({ product }: { product: Product }) => {
   return (
@@ -16,11 +18,11 @@ const Product = ({ product }: { product: Product }) => {
       <CardFooter>
         <div className="flex flex-col mx-auto">
           <h4 className="text-center font-bold text-lg mb-2">
-            {product.name} <br />
+            {product.product_name} <br />
           </h4>
-          <p className="text-center text-sm">{product.weight}g</p>
+          {/* <p className="text-center text-sm">{product.weight}g</p> */}
           <p className="font-bold text-center text-lg text-primary">
-            ${product.price}
+            ${product.product_price}
           </p>
         </div>
       </CardFooter>

@@ -1,13 +1,19 @@
-'use client'
-
 import React from 'react'
-import { Button } from '@nextui-org/react'
 import Link from 'next/link'
-import Product from './components/Product'
-import products from './utils/products'
 import CategoryList from './CategoryList'
+import api from '@/api/serviceFactory'
+import CategoryType from '@/types/Category'
 
-function Menu() {
+async function getCategories() {
+  const request = await api.get('/category/all')
+  const { data } = request.data
+  const categories: CategoryType[] = data
+  return categories
+}
+
+async function Menu() {
+  const categories = await getCategories()
+
   return (
     <section className="container mx-auto px-5 py-12">
       <div className="flex flex-col">
@@ -19,23 +25,14 @@ function Menu() {
             Menu That Always Make You Fall In Love
           </h2>
         </div>
-        <CategoryList />
-        <div className="p-8 flex-col">
-          <div className="flex justify-center gap-4 max-md:flex-col max-md:justify-center py-3">
-            {products.map((product) => (
-              <Product product={product} key={product.id} />
-            ))}
-          </div>
-        </div>
+        <CategoryList categories={categories} />
         <div className="mx-auto">
-          <Button
-            as={Link}
+          <Link
             href="/Menu"
-            color="primary"
-            className="text-primary rounded-full bg-white shadow-lg px-4 font-bold hover:bg-primary hover:text-white"
+            className="text-white rounded-full bg-red-400 shadow-lg px-4 font-bold hover:bg-primary hover:text-white p-2 transition-all"
           >
             Show More
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
