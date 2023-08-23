@@ -1,16 +1,16 @@
 'use client'
 
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
-import Product from '../../../types/Product'
+import ProductT from '../../../types/Product'
 
-const Product = ({ product }: { product: Product }) => {
+const Product = ({ product }: { product: ProductT }) => {
   return (
     <Card className="py-4 w-[220px] flex max-md:mx-auto">
       <CardBody className="py-2 justify-center items-center">
         <Image
           alt="Card background"
           className="object-cover rounded-xl mx-auto"
-          src="/products/burguer.png"
+          src={product.product_image}
           width={100}
           height={100}
         />

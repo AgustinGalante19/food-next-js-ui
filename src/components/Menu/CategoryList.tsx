@@ -1,9 +1,9 @@
 'use client'
 
 import CategoryType from '@/types/Category'
-import { MehOutlined } from '@ant-design/icons'
-import { Tab, Tabs } from '@nextui-org/react'
+import { Image, Tab, Tabs } from '@nextui-org/react'
 import Product from './components/Product'
+import NextImage from 'next/image'
 
 function CategoryList({ categories }: { categories: CategoryType[] }) {
   return (
@@ -14,7 +14,15 @@ function CategoryList({ categories }: { categories: CategoryType[] }) {
             key={cat.cat_id}
             title={
               <div className="flex items-center space-x-2">
-                <MehOutlined />
+                <div className="h-[30px] w-[30px] flex justify-center items-center">
+                  <Image
+                    as={NextImage}
+                    src={cat.cat_icon}
+                    alt="burguer icon"
+                    width={20}
+                    height={20}
+                  />
+                </div>
                 <span>{cat.cat_name}</span>
               </div>
             }
