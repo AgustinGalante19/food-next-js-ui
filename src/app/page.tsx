@@ -1,7 +1,7 @@
-import AboutUs from '@/components/AboutUs';
-import Header from '@/components/Header';
-import Menu from '@/components/Menu/Menu';
-import Reviews from '@/components/Reviews';
+import AboutUs from '@/components/AboutUs'
+import Header from '@/components/Header'
+import Menu from '@/components/Menu/Menu'
+import Reviews from '@/components/Reviews/Reviews'
 
 export default function Home() {
   return (
@@ -11,5 +11,5 @@ export default function Home() {
       <Menu />
       <Reviews />
     </div>
-  );
+  )
 }

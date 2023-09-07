@@ -111,7 +111,6 @@ function SignIn() {
         <div className="flex flex-col flex-1 justify-center align-middle px-12 max-md:px-1">
           <LoginForm />
         </div>
-        T
       </div>
     </div>
   )

@@ -7,9 +7,10 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import { AuthProvider } from '@/context/AuthContext'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { useAuthStore } from '@/hooks/zustand/useAuthStore'
+import { stat } from 'fs'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -26,9 +27,11 @@ export default function RootLayout({
   const pathname = usePathname()
   const { push } = useRouter()
 
+  const authorize = useAuthStore((state) => state.authorize)
   useEffect(() => {
     const token = window.localStorage.getItem('user-token') ?? ''
     if (token !== '') {
+      authorize()
       if (pathname === '/SignIn' || pathname === '/SignUp') {
         return push('/')
       }
@@ -39,15 +42,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${openSans.className}`}>
         <Providers>
-          <AuthProvider>
-            <div className="light">
-              <div className="flex flex-col min-h-screen w-full bg-white">
-                <Navigation />
-                <div className="flex-1">{children}</div>
-                <Footer />
-              </div>
+          <div className="light">
+            <div className="flex flex-col min-h-screen w-full bg-white">
+              <Navigation />
+              <div className="flex-1">{children}</div>
+              <Footer />
             </div>
-          </AuthProvider>
+          </div>
         </Providers>
       </body>
     </html>

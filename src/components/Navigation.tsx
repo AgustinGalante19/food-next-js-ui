@@ -15,9 +15,9 @@ import {
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 import { ArrowRightOutlined, LogoutOutlined } from '@ant-design/icons'
-import { useAuthCtx } from '@/context/AuthContext'
 import jwt_decode from 'jwt-decode'
 import useAuth from '@/hooks/auth/useAuth'
+import { useAuthStore } from '@/hooks/zustand/useAuthStore'
 
 interface Route {
   href: string
@@ -46,18 +46,26 @@ export default function Navigation() {
     },
   ]
 
-  const pathname = usePathname()
+  const authorize = useAuthStore((state) => state.authorize)
 
-  const { isAuth } = useAuthCtx()
+  const pathname = usePathname()
+  const isAuth = useAuthStore((state) => state.isAuth)
   const { handleSignout } = useAuth()
 
   const [decoded, setDecoded] = useState<any>('')
+  const token = localStorage.getItem('user-token') ?? ''
   useEffect(() => {
-    const token = localStorage.getItem('user-token') ?? ''
     if (token !== '') {
       setDecoded(jwt_decode(token))
     }
-  }, [])
+  }, [token])
+
+  useEffect(() => {
+    if (token !== '') {
+      authorize()
+    }
+  })
+
   return (
     <Navbar disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">

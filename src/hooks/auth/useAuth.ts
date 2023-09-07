@@ -1,16 +1,17 @@
 import { FormEvent, useState } from 'react'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
-import { useAuthCtx } from '@/context/AuthContext'
 import api from '@/api/serviceFactory'
 import ApiErrorResponse from '@/types/ApiErrorResponse'
 import { useRouter } from 'next/navigation'
+import { useAuthStore } from '../zustand/useAuthStore'
 
 export default function useAuth() {
   const [isLoading, setIsLoading] = useState(false)
-
-  const { setIsAuth } = useAuthCtx()
   const router = useRouter()
+
+  const authorize = useAuthStore((state) => state.authorize)
+  const unauthorize = useAuthStore((state) => state.unauthorize)
 
   const handleSubmitSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -36,7 +37,7 @@ export default function useAuth() {
         .post('/auth/signup', body)
         .then((response) => {
           const token = response.headers['user-token']
-          setIsAuth(true)
+          authorize()
           localStorage.setItem('user-token', token)
           router.push('/')
         })
@@ -81,7 +82,7 @@ export default function useAuth() {
       .post('/auth/signin', { email, password })
       .then((response) => {
         const token = response.headers['user-token']
-        setIsAuth(true)
+        authorize()
         localStorage.setItem('user-token', token)
         router.push('/')
       })
@@ -129,7 +130,7 @@ export default function useAuth() {
 
   const handleSignout = () => {
     localStorage.removeItem('user-token')
-    setIsAuth(false)
+    unauthorize()
     /* window.location.reload() */
   }
 
