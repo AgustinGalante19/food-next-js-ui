@@ -17,7 +17,8 @@ function LoginForm() {
 
   const toggleVisibility = () => setIsVisible(!isVisible)
 
-  const { handleSignin, isLoading } = useAuth()
+  const { handleSignin, isLoading, formDataLogin, handleChangeInput } =
+    useAuth()
 
   return (
     <form
@@ -27,9 +28,11 @@ function LoginForm() {
       <h2 className="font-bold text-4xl mb-4">Login</h2>
       <div className="flex flex-col">
         <Input
-          name="email"
           type="email"
+          name="email"
           label="Email"
+          value={formDataLogin.email}
+          onChange={handleChangeInput}
           labelPlacement="outside"
           placeholder="your@mail.com"
           endContent={<MailOutlined className="text-gray-400" />}
@@ -40,6 +43,8 @@ function LoginForm() {
           type={isVisible ? 'text' : 'password'}
           name="password"
           label="Password"
+          value={formDataLogin.password}
+          onChange={handleChangeInput}
           labelPlacement="outside"
           placeholder="y0urP4$sW0Rd"
           endContent={

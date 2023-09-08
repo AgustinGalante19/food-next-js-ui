@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
 import api from '@/api/serviceFactory'
@@ -12,6 +12,16 @@ export default function useAuth() {
 
   const authorize = useAuthStore((state) => state.authorize)
   const unauthorize = useAuthStore((state) => state.unauthorize)
+
+  const [formDataLogin, setFormDataLogin] = useState({
+    email: '',
+    password: '',
+  })
+
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormDataLogin({ ...formDataLogin, [name]: value })
+  }
 
   const handleSubmitSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -74,12 +84,15 @@ export default function useAuth() {
 
   const handleSignin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const fields = new FormData(e.currentTarget)
+    /*     const fields = new FormData(e.currentTarget)
     const email = fields.get('email')
-    const password = fields.get('password')
+    const password = fields.get('password') */
     setIsLoading(true)
     api
-      .post('/auth/signin', { email, password })
+      .post('/auth/signin', {
+        email: formDataLogin.email,
+        password: formDataLogin.password,
+      })
       .then((response) => {
         const token = response.headers['user-token']
         authorize()
@@ -134,5 +147,12 @@ export default function useAuth() {
     /* window.location.reload() */
   }
 
-  return { handleSubmitSignup, isLoading, handleSignout, handleSignin }
+  return {
+    handleSubmitSignup,
+    isLoading,
+    handleSignout,
+    handleSignin,
+    formDataLogin,
+    handleChangeInput,
+  }
 }
