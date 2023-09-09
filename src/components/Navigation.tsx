@@ -12,12 +12,18 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   User,
+  Badge,
 } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
-import { ArrowRightOutlined, LogoutOutlined } from '@ant-design/icons'
+import {
+  ArrowRightOutlined,
+  LogoutOutlined,
+  ShoppingCartOutlined,
+} from '@ant-design/icons'
 import jwt_decode from 'jwt-decode'
 import useAuth from '@/hooks/auth/useAuth'
 import { useAuthStore } from '@/hooks/zustand/useAuthStore'
+import { useCartStore } from '@/hooks/zustand/useCartStore'
 
 interface Route {
   href: string
@@ -54,6 +60,9 @@ export default function Navigation() {
 
   const [decoded, setDecoded] = useState<any>('')
   const token = localStorage.getItem('user-token') ?? ''
+
+  const { items } = useCartStore()
+
   useEffect(() => {
     if (token !== '') {
       setDecoded(jwt_decode(token))
@@ -94,7 +103,7 @@ export default function Navigation() {
       <NavbarContent justify="end">
         <NavbarItem>
           {isAuth && decoded !== '' ? (
-            <div className="flex gap-4">
+            <div className="flex gap-2 items-center">
               <User
                 className="font-bold cursor-pointer "
                 name={`${decoded.name} ${decoded.surname}`}
@@ -110,6 +119,11 @@ export default function Navigation() {
                 size="lg"
               >
                 <LogoutOutlined />
+              </Button>
+              <Button isIconOnly as={Link} className="bg-transparent" size="lg">
+                <Badge content={items.length} shape="circle">
+                  <ShoppingCartOutlined style={{ fontSize: '26px' }} />
+                </Badge>
               </Button>
             </div>
           ) : (

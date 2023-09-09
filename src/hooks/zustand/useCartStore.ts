@@ -1,5 +1,5 @@
-import { Product } from '@/types/Category'
 import { create } from 'zustand'
+import { Product } from '@/types/Category'
 
 interface CartStore {
   items: Product[]

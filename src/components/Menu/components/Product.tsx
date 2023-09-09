@@ -8,13 +8,9 @@ import { useCartStore } from '@/hooks/zustand/useCartStore'
 
 interface Props {
   product: ProductT
-  handlers: {
-    addItem: (product: ProductT) => void
-    removeItem: (product: ProductT) => void
-  }
 }
 
-const Product = ({ product, handlers }: Props) => {
+const Product = ({ product }: Props) => {
   const [isOnCart, setIsOnCart] = useState(false)
 
   const buttonStyle = useMemo(
@@ -23,8 +19,7 @@ const Product = ({ product, handlers }: Props) => {
     []
   )
 
-  const { addItem, removeItem } = handlers
-  const { items } = useCartStore()
+  const { items, addItem, removeItem } = useCartStore()
 
   const producIsOnCart = () => {
     const item = items.find((item) => item.product_id === product.product_id)
