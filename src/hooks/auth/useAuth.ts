@@ -5,6 +5,7 @@ import api from '@/api/serviceFactory'
 import ApiErrorResponse from '@/types/ApiErrorResponse'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '../zustand/useAuthStore'
+import { useCartStore } from '../zustand/useCartStore'
 
 export default function useAuth() {
   const [isLoading, setIsLoading] = useState(false)
@@ -18,6 +19,7 @@ export default function useAuth() {
     password: '',
   })
 
+  const { clearCart } = useCartStore()
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormDataLogin({ ...formDataLogin, [name]: value })
@@ -84,9 +86,6 @@ export default function useAuth() {
 
   const handleSignin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    /*     const fields = new FormData(e.currentTarget)
-    const email = fields.get('email')
-    const password = fields.get('password') */
     setIsLoading(true)
     api
       .post('/auth/signin', {
@@ -143,6 +142,7 @@ export default function useAuth() {
 
   const handleSignout = () => {
     localStorage.removeItem('user-token')
+    clearCart()
     unauthorize()
     /* window.location.reload() */
   }
