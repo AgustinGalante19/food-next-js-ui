@@ -2,12 +2,20 @@
 
 import CategoryType from '@/types/Category'
 import { Image, Tab, Tabs } from '@nextui-org/react'
-import Product from './components/Product'
 import NextImage from 'next/image'
+import ProductsList from './components/ProductsList'
+import { useCartStore } from '@/hooks/zustand/useCartStore'
 
 function CategoryList({ categories }: { categories: CategoryType[] }) {
+  const { items } = useCartStore()
   return (
     <div className="flex w-full flex-col items-center mt-8">
+      <button
+        onClick={() => console.log(items)}
+        className="p-2 bg-primary text-white rounded font-bold my-2"
+      >
+        See cart
+      </button>
       <Tabs aria-label="Options" color="primary" variant="bordered">
         {categories.map((cat) => (
           <Tab
@@ -27,13 +35,7 @@ function CategoryList({ categories }: { categories: CategoryType[] }) {
               </div>
             }
           >
-            <div className="p-8 flex-col">
-              <div className="flex justify-center gap-4 max-md:flex-col max-md:justify-center py-3">
-                {cat.products.map((product) => (
-                  <Product product={product} key={product.product_id} />
-                ))}
-              </div>
-            </div>
+            <ProductsList products={cat.products} />
           </Tab>
         ))}
       </Tabs>
