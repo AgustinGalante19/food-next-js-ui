@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   Navbar,
   NavbarBrand,
@@ -31,26 +31,29 @@ interface Route {
 }
 
 export default function Navigation() {
-  const routes: Route[] = [
-    {
-      href: '/',
-      title: 'Home',
-    },
+  const routes: Route[] = useMemo(
+    () => [
+      {
+        href: '/',
+        title: 'Home',
+      },
 
-    {
-      href: '/Menu',
-      title: 'Menu',
-    },
+      {
+        href: '/Menu',
+        title: 'Menu',
+      },
 
-    {
-      href: '/Service',
-      title: 'Service',
-    },
-    {
-      href: '/Contact',
-      title: 'Contact',
-    },
-  ]
+      {
+        href: '/Service',
+        title: 'Service',
+      },
+      {
+        href: '/Contact',
+        title: 'Contact',
+      },
+    ],
+    []
+  )
 
   const authorize = useAuthStore((state) => state.authorize)
 
@@ -59,9 +62,9 @@ export default function Navigation() {
   const { handleSignout } = useAuth()
 
   const [decoded, setDecoded] = useState<any>('')
-  const token = localStorage.getItem('user-token') ?? ''
 
   const { items } = useCartStore()
+  const token = localStorage.getItem('user-token') ?? ''
 
   useEffect(() => {
     if (token !== '') {
