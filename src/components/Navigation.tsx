@@ -120,8 +120,18 @@ export default function Navigation() {
               >
                 <LogoutOutlined />
               </Button>
-              <Button isIconOnly as={Link} className="bg-transparent" size="lg">
-                <Badge content={items.length} shape="circle" color="primary">
+              <Button
+                isIconOnly
+                as={Link}
+                href="/Cart"
+                className="bg-transparent"
+                size="lg"
+              >
+                <Badge
+                  content={items.length}
+                  shape="circle"
+                  color={items.length > 0 ? 'primary' : 'default'}
+                >
                   <ShoppingCartOutlined style={{ fontSize: '26px' }} />
                 </Badge>
               </Button>
