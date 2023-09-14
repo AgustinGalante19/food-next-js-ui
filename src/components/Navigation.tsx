@@ -54,10 +54,13 @@ export default function Navigation() {
   const [decoded, setDecoded] = useState<any>('')
 
   const { items } = useCartStore()
-  const token = localStorage.getItem('user-token') ?? ''
+  const token =
+    typeof window !== 'undefined'
+      ? window.localStorage.getItem('user-token')
+      : ''
 
   useEffect(() => {
-    if (token !== '') {
+    if (token && token !== '') {
       setDecoded(jwt_decode(token))
     }
   }, [token])
