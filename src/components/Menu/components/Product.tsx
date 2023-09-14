@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Card, CardBody, CardFooter, Image, user } from '@nextui-org/react'
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import ProductT from '../../../types/Product'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { useCartStore } from '@/hooks/zustand/useCartStore'
