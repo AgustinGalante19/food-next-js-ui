@@ -1,6 +1,7 @@
 import { useCartStore } from '@/hooks/zustand/useCartStore'
 import { Product } from '@/types/Category'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 function useCart() {
   const [cartState, setCartState] = useState<any>({})
@@ -46,6 +47,9 @@ function useCart() {
   const handlePay = () => {
     clearCart()
     localStorage.removeItem('items')
+    toast.success('Order placed successfully!', {
+      position: 'top-center',
+    })
   }
 
   return { handleChangeQuantity, handleRemoveItem, handlePay, cartState, items }

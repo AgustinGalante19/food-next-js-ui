@@ -3,9 +3,8 @@
 import { Button } from '@nextui-org/react'
 import ProductCard from './components/ProductCard'
 import useCart from './hooks/useCart'
-import { DollarOutlined } from '@ant-design/icons'
 import Link from 'next/link'
-import { useMemo } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 const Cart = () => {
   const {
@@ -22,6 +21,7 @@ const Cart = () => {
 
   return (
     <div className="flex flex-col container mx-auto px-5 py-8 justify-center gap-2">
+      <ToastContainer />
       {items.map((product) => (
         <ProductCard
           product={product}
@@ -32,9 +32,11 @@ const Cart = () => {
         />
       ))}
       <div className="my-4 mx-auto w-[700px]">
-        <p className="font-semibold text-2xl">
-          Total: <span className="text-primary font-bold">${totalValue}</span>
-        </p>
+        {items.length > 0 && (
+          <p className="font-semibold text-2xl">
+            Total: <span className="text-primary font-bold">${totalValue}</span>
+          </p>
+        )}
       </div>
       <div className="flex justify-center">
         {items.length > 0 ? (
@@ -43,8 +45,7 @@ const Cart = () => {
             color="primary"
             className="justify-self-center text-secondary"
           >
-            <DollarOutlined />
-            Pay
+            Confirm Order
           </Button>
         ) : (
           <p className="text-gray-400 text-center">

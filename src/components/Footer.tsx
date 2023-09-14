@@ -89,13 +89,6 @@ function Footer() {
             </span>
           </div>
           <div className="flex gap-10">
-            <button
-              onClick={() => console.log(localStorage.getItem('user-token'))}
-              className="text-gray-400 hover:text-gray-500 transition  text-sm"
-            >
-              Get Token
-            </button>
-
             <Link
               href="#"
               className="text-gray-400 hover:text-gray-500 transition  text-sm"

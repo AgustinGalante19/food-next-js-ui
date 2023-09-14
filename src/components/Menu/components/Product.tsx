@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
+import { Card, CardBody, CardFooter, Image, user } from '@nextui-org/react'
 import ProductT from '../../../types/Product'
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import { useCartStore } from '@/hooks/zustand/useCartStore'
+import { useAuthStore } from '@/hooks/zustand/useAuthStore'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   product: ProductT
@@ -20,6 +22,9 @@ const Product = ({ product }: Props) => {
   )
 
   const { items, addItem, removeItem } = useCartStore()
+  const { isAuth } = useAuthStore()
+
+  const { push } = useRouter()
 
   const producIsOnCart = () => {
     const item = items.find((item) => item.product_id === product.product_id)
@@ -33,6 +38,14 @@ const Product = ({ product }: Props) => {
   useEffect(() => {
     producIsOnCart()
   })
+
+  const handleAddProduct = () => {
+    if (isAuth) {
+      addItem(product)
+    } else {
+      push('/SignIn')
+    }
+  }
 
   return (
     <Card className="py-4 w-[220px] flex max-md:mx-auto hover:bg-primary hover:text-white">
@@ -56,7 +69,7 @@ const Product = ({ product }: Props) => {
           </p>
           <div className="flex justify-center p-1 gap-4 items-center">
             {!isOnCart ? (
-              <button className={buttonStyle} onClick={() => addItem(product)}>
+              <button className={buttonStyle} onClick={handleAddProduct}>
                 <PlusOutlined />
               </button>
             ) : (

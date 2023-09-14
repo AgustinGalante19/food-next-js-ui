@@ -37,19 +37,9 @@ export default function Navigation() {
         href: '/',
         title: 'Home',
       },
-
       {
-        href: '/Menu',
-        title: 'Menu',
-      },
-
-      {
-        href: '/Service',
-        title: 'Service',
-      },
-      {
-        href: '/Contact',
-        title: 'Contact',
+        href: '/Cart',
+        title: 'Cart',
       },
     ],
     []
