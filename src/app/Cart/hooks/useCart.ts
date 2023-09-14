@@ -44,7 +44,6 @@ function useCart() {
   }
 
   const handlePay = () => {
-    console.log('cartState: ', cartState)
     clearCart()
     localStorage.removeItem('items')
   }

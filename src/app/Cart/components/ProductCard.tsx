@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react'
 import { Product } from '@/types/Category'
-import { Image, Input } from '@nextui-org/react'
+import { Button, Image, Input } from '@nextui-org/react'
+import { DeleteOutlined } from '@ant-design/icons'
 
 interface Props {
   product: Product
@@ -30,7 +31,7 @@ const ProductCard = ({
         <p className="font-bold text-lg ">{product.product_name}</p>
       </div>
       <p className="text-primary font-bold text-lg">${product.product_price}</p>
-      <div className="ml-auto">
+      <div className="flex ml-auto items-center gap-3">
         <Input
           label="Quantity"
           type="number"
@@ -38,7 +39,13 @@ const ProductCard = ({
           value={cartState[product.product_name]?.quantity}
           onChange={(e) => handleChangeQuantity(e, product.product_name)}
         />
-        <button onClick={() => handleRemoveItem(product)}>remove item</button>
+        <Button
+          isIconOnly
+          className="bg-primary"
+          onClick={() => handleRemoveItem(product)}
+        >
+          <DeleteOutlined />
+        </Button>
       </div>
     </div>
   )
