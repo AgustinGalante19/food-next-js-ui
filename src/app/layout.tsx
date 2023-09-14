@@ -3,7 +3,6 @@
 import { Providers } from '@/context/Providers'
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
-import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
