@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { useAuthStore } from '@/hooks/zustand/useAuthStore'
 import { useCartStore } from '@/hooks/zustand/useCartStore'
 import { Product } from '@/types/Category'
+import NextTopLoader from 'nextjs-toploader'
 
 const openSans = Open_Sans({ subsets: ['latin'] })
 
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className={openSans.className}>
+        <NextTopLoader color="#ea3f30" />
         <Providers>
           <div className="light">
             <div className="flex flex-col min-h-screen w-full bg-white">
