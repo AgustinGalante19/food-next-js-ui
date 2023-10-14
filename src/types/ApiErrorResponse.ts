@@ -6,3 +6,9 @@ export default interface ApiErrorResponse {
   }
   result: string
 }
+
+export interface ApiResponse<T> {
+  data: T[]
+  errors: string[]
+  result: string
+}
