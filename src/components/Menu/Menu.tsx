@@ -2,13 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import CategoryList from './CategoryList'
 import api from '@/api/serviceFactory'
-import CategoryType from '@/types/Category'
 
 async function getCategories() {
-  const request = await api.get('/category/all')
-  const { data } = request.data
-  const categories: CategoryType[] = data
-  return categories
+  const response = await api.get('/category')
+  return response.data.data
 }
 
 async function Menu() {
