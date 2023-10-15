@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import {
   Navbar,
   NavbarBrand,
@@ -14,16 +14,16 @@ import {
   User,
   Badge,
 } from '@nextui-org/react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import {
   ArrowRightOutlined,
   LogoutOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons'
-import jwt_decode from 'jwt-decode'
-import useAuth from '@/hooks/auth/useAuth'
 import { useAuthStore } from '@/hooks/zustand/useAuthStore'
 import { useCartStore } from '@/hooks/zustand/useCartStore'
+import { signOut, useSession } from 'next-auth/react'
+import { clsx } from 'clsx'
 
 interface Route {
   href: string
@@ -45,38 +45,35 @@ export default function Navigation() {
     []
   )
 
-  const authorize = useAuthStore((state) => state.authorize)
-
   const pathname = usePathname()
   const isAuth = useAuthStore((state) => state.isAuth)
-  const { handleSignout } = useAuth()
+  const { items, clearCart } = useCartStore()
+  const { data, status } = useSession()
 
-  const [decoded, setDecoded] = useState<any>('')
+  const { push } = useRouter()
 
-  const { items } = useCartStore()
-  const token =
-    typeof window !== 'undefined'
-      ? window.localStorage.getItem('user-token')
-      : ''
-
+  const authorize = useAuthStore((state) => state.authorize)
   useEffect(() => {
-    if (token && token !== '') {
-      setDecoded(jwt_decode(token))
-    }
-  }, [token])
-
-  useEffect(() => {
-    if (token !== '') {
-      authorize()
-    }
+    if (status === 'authenticated') authorize()
+    if (
+      status === 'authenticated' &&
+      (pathname === '/SignIn' || pathname === '/SignUp')
+    )
+      push('/')
   })
+
+  const handleLogOut = () => {
+    signOut()
+    clearCart()
+    window.localStorage.setItem('items', '')
+  }
 
   return (
     <Navbar disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle className="text-primary" />
       </NavbarContent>
-      <NavbarBrand>
+      <NavbarBrand className="max-sm:hidden">
         <p className="font-bold text-4xl text-black">
           F<span className="text-primary">OO</span>D
         </p>
@@ -87,30 +84,39 @@ export default function Navigation() {
             <Link
               href={href}
               aria-current="page"
-              className={
-                href === pathname ? 'text-primary font-bold' : 'text-black'
-              }
+              className={clsx('text-black font-bold', {
+                'text-primary font-bold': href === pathname,
+              })}
             >
-              {title}
+              <div className="flex flex-col items-center">
+                <p>{title}</p>
+                {pathname === href && (
+                  <div className="h-1 w-4 bg-primary rounded"></div>
+                )}
+              </div>
             </Link>
           </NavbarItem>
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          {isAuth && decoded !== '' ? (
+        <NavbarItem className="max-sm:hidden">
+          {isAuth ? (
             <div className="flex gap-2 items-center">
               <User
                 className="font-bold cursor-pointer "
-                name={`${decoded.name} ${decoded.surname}`}
-                description={<span>{decoded.email}</span>}
+                name={data?.user?.name || ''}
+                description={
+                  <span className="text-ellipsis">{data?.user?.email}</span>
+                }
                 avatarProps={{
-                  src: 'https://avatars.githubusercontent.com/u/30373425?v=4',
+                  src:
+                    data?.user?.image ||
+                    'https://avatars.githubusercontent.com/u/94130?v=4',
                 }}
               />
               <Button
                 isIconOnly
-                onClick={handleSignout}
+                onClick={handleLogOut}
                 className="bg-transparent hover:text-red-400 text-lg"
                 size="lg"
               >
@@ -148,6 +154,20 @@ export default function Navigation() {
       </NavbarContent>
 
       <NavbarMenu>
+        <div className="flex justify-between">
+          <p className="font-bold text-4xl text-black">
+            F<span className="text-primary">OO</span>D
+          </p>
+          <Button
+            onClick={handleLogOut}
+            className="bg-transparent"
+            size="lg"
+            endContent={<LogoutOutlined />}
+          >
+            Signout
+          </Button>
+        </div>
+
         {routes.map((item, index) => (
           <NavbarMenuItem key={`${item.title}-${index}`}>
             <Link
@@ -160,6 +180,20 @@ export default function Navigation() {
             </Link>
           </NavbarMenuItem>
         ))}
+        <div className="flex-1">
+          <User
+            className="font-bold cursor-pointer absolute bottom-24"
+            name={data?.user?.name || ''}
+            description={
+              <span className="text-ellipsis">{data?.user?.email}</span>
+            }
+            avatarProps={{
+              src:
+                data?.user?.image ||
+                'https://avatars.githubusercontent.com/u/94130?v=4',
+            }}
+          />
+        </div>
       </NavbarMenu>
     </Navbar>
   )

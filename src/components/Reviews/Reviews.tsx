@@ -1,11 +1,17 @@
 import ReviewType from '@/types/Review'
 import Carousel from './components/Carousel'
-
-import api from '@/api/serviceFactory'
 import { ApiResponse } from '@/types/ApiErrorResponse'
 
+const getReviews = async (): Promise<ApiResponse<ReviewType>> => {
+  const reviewsRequest = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/reviews`
+  )
+  const reviews: ApiResponse<ReviewType> = await reviewsRequest.json()
+  return reviews
+}
+
 async function Reviews() {
-  const reviews = await api.get<ApiResponse<ReviewType>>('/reviews')
+  const reviews = await getReviews()
   return (
     <section>
       <div className="container mx-auto py-8">
@@ -18,7 +24,7 @@ async function Reviews() {
           consectetur voluptas accusamus dolorum tempora doloribus!
         </p>
       </div>
-      <Carousel reviews={reviews.data.data} />
+      <Carousel reviews={reviews.data} />
     </section>
   )
 }

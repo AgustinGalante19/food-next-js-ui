@@ -1,13 +1,12 @@
 'use client'
 
-import React from 'react'
 import { BookOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { Button } from '@nextui-org/react'
 
 function Header() {
   return (
     <header className="container mx-auto mt-14 py-2">
-      <div className=" grid grid-rows-1 grid-cols-2 container mx-auto p-5 max-md:grid-rows-2 max-md:grid-cols-1">
+      <div className=" grid grid-rows-1 grid-cols-2 container mx-auto p-5 max-md:grid-rows-2 max-md:grid-cols-1 max-sm:p-2">
         <div className="w-full flex flex-col gap-4 m-auto items-center">
           <h1 className="text-5xl max-md:max-w-full font-bold text-black max-w-sm leading-snug">
             Be The Fastest In Delivering Your{' '}
