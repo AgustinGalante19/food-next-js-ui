@@ -1,100 +1,20 @@
 'use client'
 
-import React, { useState } from 'react'
-import {
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  MailOutlined,
-} from '@ant-design/icons'
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import { Button } from '@nextui-org/react'
 import { Image } from '@nextui-org/react'
-import Link from 'next/link'
-import useAuth from '@/hooks/auth/useAuth'
 import { ToastContainer } from 'react-toastify'
+import { signIn } from 'next-auth/react'
 
 function LoginForm() {
-  const [isVisible, setIsVisible] = useState(false)
-
-  const toggleVisibility = () => setIsVisible(!isVisible)
-
-  const { handleSignin, isLoading, formDataLogin, handleChangeInput } =
-    useAuth()
-
   return (
     <form
       className="flex flex-col w-[400px] mx-auto gap-4 max-sm:w-[300px]"
-      onSubmit={handleSignin}
+      onSubmit={() => signIn()}
     >
       <h2 className="font-bold text-4xl mb-4">Login</h2>
-      <div className="flex flex-col">
-        <Input
-          type="email"
-          name="email"
-          label="Email"
-          value={formDataLogin.email}
-          onChange={handleChangeInput}
-          labelPlacement="outside"
-          placeholder="your@mail.com"
-          endContent={<MailOutlined className="text-gray-400" />}
-        />
-      </div>
-      <div className="flex flex-col">
-        <Input
-          type={isVisible ? 'text' : 'password'}
-          name="password"
-          label="Password"
-          value={formDataLogin.password}
-          onChange={handleChangeInput}
-          labelPlacement="outside"
-          placeholder="y0urP4$sW0Rd"
-          endContent={
-            <button
-              className="focus:outline-none"
-              type="button"
-              onClick={toggleVisibility}
-            >
-              {isVisible ? (
-                <EyeInvisibleOutlined className="text-2xl text-default-400 pointer-events-none" />
-              ) : (
-                <EyeOutlined className="text-2xl text-default-400 pointer-events-none" />
-              )}
-            </button>
-          }
-        />
-      </div>
-      <div className="flex justify-between mt-2">
-        <div>
-          <Checkbox defaultSelected size="sm">
-            Kepp me logged in
-          </Checkbox>
-        </div>
-        <div>
-          <Link
-            href="/PasswordRecovery"
-            className="text-sm p-1 text-primary font-semibold hover:text-red-400"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-      </div>
-      <Button
-        fullWidth
-        color="primary"
-        className="text-white"
-        type="submit"
-        isLoading={isLoading}
-      >
+      <Button fullWidth color="primary" className="text-white" type="submit">
         Login
       </Button>
-      <p>
-        Don{`'`}t Have an Account?{' '}
-        <Link
-          href="/SignUp"
-          className="text-primary font-semibold hover:text-red-400"
-        >
-          Signup
-        </Link>{' '}
-      </p>
     </form>
   )
 }
