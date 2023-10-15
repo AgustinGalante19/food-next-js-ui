@@ -8,7 +8,7 @@ const Card = ({ review }: { review: ReviewType }) => {
         <div className="flex flex-col align-middle">
           <Image
             className="my-auto"
-            src="http://localhost:8000/static/products/drink.avif"
+            src="/products/burguer.avif"
             width={100}
             height={100}
             alt="user image"
