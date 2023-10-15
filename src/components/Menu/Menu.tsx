@@ -1,13 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
 import CategoryList from './CategoryList'
-import api from '@/api/serviceFactory'
 import { ApiResponse } from '@/types/ApiErrorResponse'
 import CategoryType from '@/types/Category'
 
-async function getCategories() {
-  const response = await api.get<ApiResponse<CategoryType>>('/category')
-  return response.data.data
+async function getCategories(): Promise<ApiResponse<CategoryType>> {
+  const categoriesReq = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/category`
+  )
+  const categories: ApiResponse<CategoryType> = await categoriesReq.json()
+  return categories
 }
 
 async function Menu() {
@@ -24,7 +26,7 @@ async function Menu() {
             Menu That Always Make You Fall In Love
           </h2>
         </div>
-        <CategoryList categories={categories} />
+        <CategoryList categories={categories.data} />
         <div className="mx-auto">
           <Link
             href="/Menu"
