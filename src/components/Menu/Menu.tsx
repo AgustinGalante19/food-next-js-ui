@@ -2,9 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import CategoryList from './CategoryList'
 import api from '@/api/serviceFactory'
+import { ApiResponse } from '@/types/ApiErrorResponse'
+import CategoryType from '@/types/Category'
 
 async function getCategories() {
-  const response = await api.get('/category')
+  const response = await api.get<ApiResponse<CategoryType>>('/category')
   return response.data.data
 }
 

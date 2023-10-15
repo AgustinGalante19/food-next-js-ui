@@ -1,8 +1,7 @@
 import ReviewType from '@/types/Review'
 import Carousel from './components/Carousel'
-
-import api from '@/api/serviceFactory'
 import { ApiResponse } from '@/types/ApiErrorResponse'
+import api from '@/api/serviceFactory'
 
 async function Reviews() {
   const reviews = await api.get<ApiResponse<ReviewType>>('/reviews')
