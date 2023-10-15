@@ -47,7 +47,7 @@ export default function Navigation() {
 
   const pathname = usePathname()
   const isAuth = useAuthStore((state) => state.isAuth)
-  const { items } = useCartStore()
+  const { items, clearCart } = useCartStore()
   const { data, status } = useSession()
 
   const { push } = useRouter()
@@ -62,12 +62,18 @@ export default function Navigation() {
       push('/')
   })
 
+  const handleLogOut = () => {
+    signOut()
+    clearCart()
+    window.localStorage.setItem('items', '')
+  }
+
   return (
     <Navbar disableAnimation isBordered>
       <NavbarContent className="sm:hidden" justify="start">
         <NavbarMenuToggle className="text-primary" />
       </NavbarContent>
-      <NavbarBrand>
+      <NavbarBrand className="max-sm:hidden">
         <p className="font-bold text-4xl text-black">
           F<span className="text-primary">OO</span>D
         </p>
@@ -93,13 +99,15 @@ export default function Navigation() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
+        <NavbarItem className="max-sm:hidden">
           {isAuth ? (
             <div className="flex gap-2 items-center">
               <User
                 className="font-bold cursor-pointer "
                 name={data?.user?.name || ''}
-                description={<span>{data?.user?.email}</span>}
+                description={
+                  <span className="text-ellipsis">{data?.user?.email}</span>
+                }
                 avatarProps={{
                   src:
                     data?.user?.image ||
@@ -108,7 +116,7 @@ export default function Navigation() {
               />
               <Button
                 isIconOnly
-                onClick={() => signOut()}
+                onClick={handleLogOut}
                 className="bg-transparent hover:text-red-400 text-lg"
                 size="lg"
               >
@@ -146,6 +154,20 @@ export default function Navigation() {
       </NavbarContent>
 
       <NavbarMenu>
+        <div className="flex justify-between">
+          <p className="font-bold text-4xl text-black">
+            F<span className="text-primary">OO</span>D
+          </p>
+          <Button
+            onClick={handleLogOut}
+            className="bg-transparent"
+            size="lg"
+            endContent={<LogoutOutlined />}
+          >
+            Signout
+          </Button>
+        </div>
+
         {routes.map((item, index) => (
           <NavbarMenuItem key={`${item.title}-${index}`}>
             <Link
@@ -158,6 +180,20 @@ export default function Navigation() {
             </Link>
           </NavbarMenuItem>
         ))}
+        <div className="flex-1">
+          <User
+            className="font-bold cursor-pointer absolute bottom-24"
+            name={data?.user?.name || ''}
+            description={
+              <span className="text-ellipsis">{data?.user?.email}</span>
+            }
+            avatarProps={{
+              src:
+                data?.user?.image ||
+                'https://avatars.githubusercontent.com/u/94130?v=4',
+            }}
+          />
+        </div>
       </NavbarMenu>
     </Navbar>
   )
