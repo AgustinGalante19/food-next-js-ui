@@ -11,7 +11,15 @@ const getReviews = async (): Promise<ApiResponse<ReviewType>> => {
 }
 
 async function Reviews() {
-  const reviews = await getReviews()
+  let reviews
+  try {
+    reviews = await getReviews()
+  } catch (err) {
+    reviews = {
+      data: [],
+    }
+    console.log('error en reviews')
+  }
   return (
     <section>
       <div className="container mx-auto py-8">

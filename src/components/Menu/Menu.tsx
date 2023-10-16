@@ -13,7 +13,15 @@ async function getCategories(): Promise<ApiResponse<CategoryType>> {
 }
 
 async function Menu() {
-  const categories = await getCategories()
+  let categories
+  try {
+    categories = await getCategories()
+  } catch (err) {
+    categories = {
+      data: [],
+    }
+    console.log('error en menu')
+  }
 
   return (
     <section className="container mx-auto px-5 py-12">
