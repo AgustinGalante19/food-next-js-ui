@@ -22,9 +22,8 @@ export default function RootLayout({ children }: LayoutProps) {
 
   useEffect(() => {
     const itemsOnCart: string = window.localStorage.getItem('items') ?? '[]'
-
     if (itemsOnCart !== '') {
-      const parsedItems: Product[] = JSON.parse(itemsOnCart)
+      const parsedItems: Product[] = JSON.parse(itemsOnCart) ?? []
       if (parsedItems.length > 0) {
         parsedItems.forEach((item) => {
           addItem(item)
