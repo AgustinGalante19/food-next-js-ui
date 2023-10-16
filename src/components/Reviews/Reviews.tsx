@@ -18,7 +18,7 @@ async function Reviews() {
     reviews = {
       data: [],
     }
-    console.log('error en reviews')
+    console.log('error en reviews', err)
   }
   return (
     <section>

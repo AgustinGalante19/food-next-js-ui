@@ -20,7 +20,7 @@ async function Menu() {
     categories = {
       data: [],
     }
-    console.log('error en menu')
+    console.log('error en menu', err)
   }
 
   return (
