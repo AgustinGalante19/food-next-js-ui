@@ -21,14 +21,18 @@ export default function RootLayout({ children }: LayoutProps) {
   const { addItem } = useCartStore()
 
   useEffect(() => {
-    const itemsOnCart: string = window.localStorage.getItem('items') ?? '[]'
-    if (itemsOnCart !== '') {
-      const parsedItems: Product[] = JSON.parse(itemsOnCart) ?? []
-      if (parsedItems.length > 0) {
-        parsedItems.forEach((item) => {
-          addItem(item)
-        })
+    try {
+      const itemsOnCart: string = window.localStorage.getItem('items') ?? '[]'
+      if (itemsOnCart !== '') {
+        const parsedItems: Product[] = JSON.parse(itemsOnCart)
+        if (parsedItems.length > 0) {
+          parsedItems.forEach((item) => {
+            addItem(item)
+          })
+        }
       }
+    } catch (err) {
+      console.log('Errorrrrrrrrrrrrrrrr layout')
     }
   }, [addItem])
 
