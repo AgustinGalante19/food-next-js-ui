@@ -27,7 +27,9 @@ async function Menu() {
     <section className="container mx-auto px-5 py-12">
       <div className="flex flex-col">
         <div className="flex">
-          <h6 className="text-primary text-sm text-center mx-auto">Our Menu</h6>
+          <h6 className="text-primary text-sm text-center mx-auto font-semibold">
+            Our Menu
+          </h6>
         </div>
         <div className="flex mt-6">
           <h2 className="text-black text-3xl font-bold max-w-sm text-center mx-auto leading-snug">
@@ -35,14 +37,14 @@ async function Menu() {
           </h2>
         </div>
         <CategoryList categories={categories.data} />
-        <div className="mx-auto">
+        {/* <div className="mx-auto">
           <Link
             href="/Menu"
             className="text-white rounded-full bg-red-400 shadow-lg px-4 font-bold hover:bg-primary hover:text-white p-2 transition-all"
           >
             Show More
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   )
