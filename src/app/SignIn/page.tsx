@@ -6,16 +6,23 @@ import { ToastContainer } from 'react-toastify'
 import { signIn } from 'next-auth/react'
 
 function LoginForm() {
+  const handleSignIn = () => {
+    signIn('github', { redirect: false })
+  }
+
   return (
-    <form
-      className="flex flex-col w-[400px] mx-auto gap-4 max-sm:w-[300px]"
-      onSubmit={() => signIn()}
-    >
+    <div>
       <h2 className="font-bold text-4xl mb-4">Login</h2>
-      <Button fullWidth color="primary" className="text-white" type="submit">
+      <Button
+        fullWidth
+        color="primary"
+        className="text-white"
+        type="button"
+        onClick={handleSignIn}
+      >
         Login
       </Button>
-    </form>
+    </div>
   )
 }
 
