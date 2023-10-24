@@ -41,6 +41,10 @@ export default function Navigation() {
         href: '/Cart',
         title: 'Cart',
       },
+      {
+        href: '/Reviews',
+        title: 'Reviews',
+      },
     ],
     []
   )
