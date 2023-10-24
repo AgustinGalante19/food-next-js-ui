@@ -1,9 +1,9 @@
 interface ReviewType {
+  id: number
   title: string
   quote: string
-  name: string
-  surname: string
-  user_image: string
+  author: string
+  created_at: Date
 }
 
 export default ReviewType
