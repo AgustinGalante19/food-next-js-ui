@@ -19,7 +19,7 @@ const Card = ({ review }: { review: ReviewType }) => {
           <p className="text-gray-700">{review.quote}</p>
           <p className="mt-1">
             <span className="text-primary text-lg font-semibold">
-              {review.name} {review.surname}
+              {review.author}
             </span>
           </p>
         </div>

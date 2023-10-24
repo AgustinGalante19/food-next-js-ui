@@ -12,7 +12,7 @@ const Carousel = ({ reviews }: { reviews: ReviewType[] }) => {
     <div className="container mx-auto">
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
         {reviews.map((review) => (
-          <SwiperSlide key={review.name} className="p-12 max-sm:p-0">
+          <SwiperSlide key={review.author} className="p-12 max-sm:p-0">
             <Card review={review} />
           </SwiperSlide>
         ))}
