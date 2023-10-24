@@ -10,5 +10,5 @@ export default interface ApiErrorResponse {
 export interface ApiResponse<T> {
   data: T[]
   errors: string[]
-  result: string
+  result: 'ok' | 'error'
 }
